@@ -1,0 +1,9 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =7
+let g:netrw_dirhist_1='/var/www/html/lang'
+let g:netrw_dirhist_2='/var/www/html/template'
+let g:netrw_dirhist_3='/etc'
+let g:netrw_dirhist_4='/home/ubuntu/hustoj/install'
+let g:netrw_dirhist_5='/home/ubuntu/sync'
+let g:netrw_dirhist_6='/home/ubuntu/.ssh'
+let g:netrw_dirhist_7='/home/ubuntu/.vim'
