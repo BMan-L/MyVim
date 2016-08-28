@@ -16,6 +16,9 @@ Plugin 'Valloric/YouCompleteMe'
 Plugin 'rdnetto/YCM-Generator'
 
 Plugin 'Auto-Pairs'
+Plugin 'a.vim'
+Plugin 'showcolor.vim'
+Plugin 'rainbow_parentheses.vim'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -37,6 +40,9 @@ set ts=4
 set expandtab
 set smarttab
 
+set autoread
+set autowrite
+
 "[自动缩进]
 set autoindent
 set cindent
@@ -52,6 +58,7 @@ set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %{strf
 set nu
 set cul
 set laststatus=2
+set t_Co=256
 
 "function! AutoPair(open, close)
 "	let line = getline('.')
@@ -88,6 +95,7 @@ nnoremap <leader>g :YcmCompleter GoTo<CR>
 
 set scrolloff=10 
 set nocompatible
+set noswapfile
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -151,10 +159,10 @@ map <F5> :call CompileRunGcc()<CR>
 func! CompileRunGcc()
 	exec "w"
 	if &filetype == 'c'
-		exec "!g++ % -o %<"
+		exec "!gcc % -o %<"
 		exec "!time ./%<"
 	elseif &filetype == 'cpp'
-		exec "!g++ % -o %<"
+		exec "!g++ -std=c++11 % -o %<"
 		exec "!time ./%<"
 	elseif &filetype == 'java' 
 		exec "!javac %" 
@@ -184,3 +192,56 @@ let g:miniBufExplModSelTarget = 1
 "键盘映射
 map <C-A> ggVG$"+y"
 nmap <TAB> :bn<CR>
+nmap <silent> <F9> <ESC>:Tlist<RETURN>
+nmap <C-L> <C-W>l
+nmap <C-K> <C-W>k
+nmap <C-J> <C-W>j
+nmap <C-H> <C-W>h
+
+"[切换头文件]
+imap <F12> <ESC>:A<CR>
+nmap <F12> :A<CR>
+
+
+"tlist
+let Tlist_Sort_Type = "name"    " 按照名称排序  
+let Tlist_Use_Right_Window = 1  " 在右侧显示窗口  
+let Tlist_Compart_Format = 1    " 压缩方式  
+let Tlist_Exist_OnlyWindow = 1  " 如果只有一个buffer，kill窗口也kill掉buffer  
+""let Tlist_File_Fold_Auto_Close = 0  " 不要关闭其他文件的tags  
+""let Tlist_Enable_Fold_Column = 0    " 不要显示折叠树  
+"let Tlist_Show_One_File=1            "不同时显示多个文件的tag，只显示当前文件的
+"设置tags  
+set tags=tags;  
+set autochdir 
+let Tlist_Auto_Open=0 
+"""""""""""""""""""""""""""""""" 
+let Tlist_Ctags_Cmd = '/usr/bin/ctags' 
+let Tlist_Show_One_File = 1 "不同时显示多个文件的tag，只显示当前文件的 
+let Tlist_File_Fold_Auto_Close = 1
+let Tlist_Exit_OnlyWindow = 1 "如果taglist窗口是最后一个窗口，则退出vim 
+let Tlist_Use_Right_Window = 1 "在右侧窗口中显示taglist窗口
+
+
+"rainbow_parentheses.vim 
+let g:rbpt_colorpairs = [
+    \ ['brown',       'RoyalBlue3'],
+    \ ['Darkblue',    'SeaGreen3'],
+    \ ['darkgray',    'DarkOrchid3'],
+    \ ['darkgreen',   'firebrick3'],
+    \ ['darkred',     'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['brown',       'firebrick3'],
+    \ ['gray',        'RoyalBlue3'],
+    \ ['darkcyan',    'RoyalBlue3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['Darkblue',    'firebrick3'],
+    \ ['darkcyan',    'SeaGreen3'],
+    \ ['red',         'firebrick3'],
+    \ ]
+let g:rbpt_max = 13
+let g:rbpt_loadcmd_toggle = 0
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
