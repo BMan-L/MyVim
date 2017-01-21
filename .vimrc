@@ -56,7 +56,7 @@ set incsearch
 colo ron
 set statusline=%F%m%r%h%w\ [FORMAT=%{&ff}]\ [TYPE=%Y]\ [POS=%l,%v][%p%%]\ %{strftime(\"%d/%m/%y\ -\ %H:%M\")}   "状态行显示的内容"
 set nu
-set cul
+"set cul
 set laststatus=2
 set t_Co=256
 
@@ -140,9 +140,10 @@ func SetTitle()
 		call append(line(".")+7, "")
 	endif
 	if expand("%:e") == 'h'
-		call append(line(".")+6, "#ifndef _".toupper(expand("%:r"))."_H")
-		call append(line(".")+7, "#define _".toupper(expand("%:r"))."_H")
-		call append(line(".")+8, "#endif")
+		"call append(line(".")+6, "#ifndef _".toupper(expand("%:r"))."_H")
+		"call append(line(".")+7, "#define _".toupper(expand("%:r"))."_H")
+		"call append(line(".")+8, "#endif")
+        call append(line(".") + 6, "#pragma once")
 	endif
 	if &filetype == 'java'
 		call append(line(".")+6,"public class ".expand("%:r"))
@@ -153,7 +154,7 @@ endfunc
 autocmd BufNewFile * normal G
 
  
-:autocmd BufRead,BufNewFile *.dot map <F5> :w<CR>:!dot -Tjpg -o %<.jpg % && eog %<.jpg  <CR><CR> && exec "redr!"
+":autocmd BufRead,BufNewFile *.dot map <F5> :w<CR>:!dot -Tjpg -o %<.jpg % && eog %<.jpg  <CR><CR> && exec "redr!"
 "C，C++ 按F5编译运行
 map <F5> :call CompileRunGcc()<CR>
 func! CompileRunGcc()
@@ -162,7 +163,7 @@ func! CompileRunGcc()
 		exec "!gcc % -o %<"
 		exec "!time ./%<"
 	elseif &filetype == 'cpp'
-		exec "!g++ -std=c++11 % -o %<"
+		exec "!g++ -std=c++11 -pthread % -o %<"
 		exec "!time ./%<"
 	elseif &filetype == 'java' 
 		exec "!javac %" 
@@ -186,17 +187,24 @@ endfunc
 "minibuff
 let g:miniBufExplMapWindowNavVim = 1 
 let g:miniBufExplMapWindowNavArrows = 1 
-let g:miniBufExplMapCTabSwitchBufs = 1 
+"let g:miniBufExplMapCTabSwitchBufs = 1 
 let g:miniBufExplModSelTarget = 1 
+"let g:miniBufExplVSplit = 1
 
 "键盘映射
 map <C-A> ggVG$"+y"
 nmap <TAB> :bn<CR>
+nmap <S-TAB> :bp<CR>
 nmap <silent> <F9> <ESC>:Tlist<RETURN>
 nmap <C-L> <C-W>l
 nmap <C-K> <C-W>k
 nmap <C-J> <C-W>j
 nmap <C-H> <C-W>h
+
+
+"调整buffer大小
+nmap + :vertical resize +3<CR> 
+nmap - :vertical resize -3<CR>
 
 "[切换头文件]
 imap <F12> <ESC>:A<CR>
