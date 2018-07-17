@@ -12,13 +12,15 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 
 "youcomleteme
-Plugin 'Valloric/YouCompleteMe'
+"Plugin 'Valloric/YouCompleteMe'
 Plugin 'rdnetto/YCM-Generator'
 
 Plugin 'Auto-Pairs'
 Plugin 'a.vim'
 Plugin 'showcolor.vim'
 Plugin 'rainbow_parentheses.vim'
+Plugin 'AutoComplPop'
+Plugin 'SuperTab'
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -253,3 +255,7 @@ au VimEnter * RainbowParenthesesToggle
 au Syntax * RainbowParenthesesLoadRound
 au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
+
+au FileType cpp setlocal dict+=~/.vim/dict/cpp.dict
+filetype plugin indent on
+set completeopt=longest,menu
