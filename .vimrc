@@ -86,13 +86,14 @@ set t_Co=256
 "inoremap } <c-r>=ClosePair('}')<CR>
 
 
-"[YCN]
+"[YCM]
 let g:ycm_confirm_extra_conf=0
 let g:ycm_complete_in_comments=1
 let g:ycm_autoclose_preview_window_after_completion = 0
 let g:ycm_autoclose_preview_window_after_insertion = 1
-let g:ycm_add_preview_to_completeopt = 0
+let g:ycm_add_preview_to_completeopt = 1
 let g:ycm_key_invoke_completion = '<C-J>'
+let g:ycm_seed_identifiers_with_syntax=1
 nnoremap <leader>g :YcmCompleter GoTo<CR>
 
 set scrolloff=10 
@@ -165,7 +166,7 @@ func! CompileRunGcc()
 		exec "!gcc % -o %<"
 		exec "!time ./%<"
 	elseif &filetype == 'cpp'
-		exec "!g++ -std=c++11 -pthread % -o %<"
+		exec "!g++ -std=c++11 -g -pthread % -o %<"
 		exec "!time ./%<"
 	elseif &filetype == 'java' 
 		exec "!javac %" 
