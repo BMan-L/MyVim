@@ -86,14 +86,13 @@ set t_Co=256
 "inoremap } <c-r>=ClosePair('}')<CR>
 
 
-"[YCM]
+"[YCN]
 let g:ycm_confirm_extra_conf=0
 let g:ycm_complete_in_comments=1
 let g:ycm_autoclose_preview_window_after_completion = 0
 let g:ycm_autoclose_preview_window_after_insertion = 1
-let g:ycm_add_preview_to_completeopt = 1
+let g:ycm_add_preview_to_completeopt = 0
 let g:ycm_key_invoke_completion = '<C-J>'
-let g:ycm_seed_identifiers_with_syntax=1
 nnoremap <leader>g :YcmCompleter GoTo<CR>
 
 set scrolloff=10 
@@ -106,6 +105,7 @@ set noswapfile
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "新建.c,.h,.sh,.java文件，自动插入文件头 
 autocmd BufNewFile *.cpp,*.[ch],*.sh,*.rb,*.java,*.py exec ":call SetTitle()" 
+let g:acmmode=1
 ""定义函数SetTitle，自动插入文件头 
 func SetTitle() 
 	"如果文件类型为.sh文件 
@@ -134,9 +134,13 @@ func SetTitle()
 		call append(line(".")+5, "")
 	endif
 	if expand("%:e") == 'cpp'
-		call append(line(".")+6, "#include <bits/stdc++.h>")
-		call append(line(".")+7, "using namespace std;")
-		call append(line(".")+8, "")
+        if g:acmmode == 1
+            exec ":$r ~/acm/template.cpp"
+        else
+            call append(line(".")+6, "#include <bits/stdc++.h>")
+            call append(line(".")+7, "using namespace std;")
+            call append(line(".")+8, "")
+        endif
 	endif
 	if &filetype == 'c'
 		call append(line(".")+6, "#include <stdio.h>")
@@ -167,7 +171,7 @@ func! CompileRunGcc()
 		exec "!time ./%<"
 	elseif &filetype == 'cpp'
 		exec "!g++ -std=c++11 -g -pthread % -o %<"
-		exec "!time ./%<"
+		"exec "!time ./%<"
 	elseif &filetype == 'java' 
 		exec "!javac %" 
 		exec "!time java %<"
@@ -237,7 +241,6 @@ let Tlist_Use_Right_Window = 1 "在右侧窗口中显示taglist窗口
 "rainbow_parentheses.vim 
 let g:rbpt_colorpairs = [
     \ ['brown',       'RoyalBlue3'],
-    \ ['Darkblue',    'SeaGreen3'],
     \ ['darkgray',    'DarkOrchid3'],
     \ ['darkgreen',   'firebrick3'],
     \ ['darkred',     'SeaGreen3'],
@@ -246,11 +249,10 @@ let g:rbpt_colorpairs = [
     \ ['gray',        'RoyalBlue3'],
     \ ['darkcyan',    'RoyalBlue3'],
     \ ['darkmagenta', 'DarkOrchid3'],
-    \ ['Darkblue',    'firebrick3'],
     \ ['darkcyan',    'SeaGreen3'],
     \ ['red',         'firebrick3'],
     \ ]
-let g:rbpt_max = 13
+let g:rbpt_max = 11
 let g:rbpt_loadcmd_toggle = 0
 au VimEnter * RainbowParenthesesToggle
 au Syntax * RainbowParenthesesLoadRound
