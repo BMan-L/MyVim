@@ -163,6 +163,7 @@ autocmd BufNewFile * normal G
  
 ":autocmd BufRead,BufNewFile *.dot map <F5> :w<CR>:!dot -Tjpg -o %<.jpg % && eog %<.jpg  <CR><CR> && exec "redr!"
 "C，C++ 按F5编译运行
+map <F4> :e %<.input<CR>
 map <F5> :call CompileRunGcc()<CR>
 func! CompileRunGcc()
 	exec "w"
@@ -170,8 +171,12 @@ func! CompileRunGcc()
 		exec "!gcc % -o %<"
 		exec "!time ./%<"
 	elseif &filetype == 'cpp'
-		exec "!g++ -std=c++11 -g -pthread % -o %<"
-		"exec "!time ./%<"
+		exec "!g++ -std=c++14  -g % -lpthread -o %<"
+        if g:acmmode == 1 
+            exec "!time ./%< < %<.input"
+        else 
+            exec "!time ./%<"
+        endif
 	elseif &filetype == 'java' 
 		exec "!javac %" 
 		exec "!time java %<"
@@ -261,4 +266,8 @@ au Syntax * RainbowParenthesesLoadBraces
 
 au FileType cpp setlocal dict+=~/.vim/dict/cpp.dict
 filetype plugin indent on
-set completeopt=longest,menu
+"set completeopt=longest,menu
+set completeopt=preview,menu
+
+"let g:SuperTabDefaultCompletionType = "<c-n>"
+"let g:SuperTabContextDefaultCompletionType = "<c-n>"

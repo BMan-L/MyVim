@@ -8,6 +8,7 @@
 
 #define FOR(i, x, y) for (int i = x; i <= y; i++) 
 #define REPEAT(_N) for (int _i = 0; _i < _N; _i++) 
+#define TCASE() int _T; Read(_T); REPEAT(_T)
 
 using namespace std;
 
@@ -20,27 +21,6 @@ inline bool Read(int &a, int &b, int &c) { return scanf("%d%d%d", &a, &b, &c) !=
 inline bool Read(int &a, int &b, int &c, int &d) { return scanf("%d%d%d%d", &a, &b, &c, &d) != EOF; }
 
 const int INF = 0x3f3f3f3f;
-
-struct Edge {
-    int u;
-    int v;
-    int d;
-    Edge() {} 
-    Edge(int u, int v, int d) : u(u), v(v), d(d) {}
-    bool operator < (const Edge & x) const {
-        return d < x.d;
-    }
-};
-
-struct HeadNode {
-    int d;
-    int u;
-    HeadNode() {}
-    HeadNode(int d, int u) : d(d), u(u) {}
-    bool operator < (const HeadNode &x) const {
-        return d > x.d;
-    }
-};
 
 const int maxn = 1e5 + 10;
 
